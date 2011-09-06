@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <script type='text/javascript' src='./jquery-1.6.2.min.js'></script>
+        <script type='text/javascript' src='./fusuma.js'></script>
+        <script type='text/javascript'>
+        <!--
+            $(function(){
+                var fusuma = $('#block').fusuma(320);
+                // fusuma.slide('next');
+                fusuma.add('4').to('next');
+                fusuma.add('2').to('prev');
+                fusuma.add('1').to('start');
+                fusuma.add('5').to('end');
+                $('#next').click(function(e) { fusuma.go('next'); });
+                $('#prev').click(function(e) { fusuma.go('prev'); });
+            });
+        -->
+        </script>
+    </head>
+    <body>
+        <div id='block'>
+            <ul>
+                <li>3</li>
+            </ul>
+        </div>
+        <button id='prev'>⇐</button>
+        <button id='next'>⇛</button>
+    </body>
+</html>
