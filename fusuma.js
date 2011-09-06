@@ -55,11 +55,11 @@
     };
     Fusuma.prototype.go = function(dir, callback) {
         var dispatch_mapping = {
-            next : 'slide_into_left', forward : 'slide_into_left', prev : 'slide_into_right', back : 'slide_into_right'
+            next : 'slide_into_right', forward : 'slide_into_right', prev : 'slide_into_left', back : 'slide_into_left'
         };
         this[dispatch_mapping[dir]](callback);
     };
-    Fusuma.prototype.slide_into_left = function(callback) {
+    Fusuma.prototype.slide_into_right = function(callback) {
         if(this.is_end) return;
         var _this = this;
         $(this.target).filter(':not(:animated)').animate({
@@ -72,7 +72,7 @@
             }
         });
     };
-    Fusuma.prototype.slide_into_right = function(callback) {
+    Fusuma.prototype.slide_into_left = function(callback) {
         if(this.is_start) return;
         var _this = this;
         $(this.target).filter(':not(:animated)').animate({
