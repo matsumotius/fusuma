@@ -6,11 +6,14 @@
         <!--
             $(function(){
                 var fusuma = $('#block').fusuma(320);
-                // fusuma.slide('next');
                 fusuma.add('4').to('next');
                 fusuma.add('2').to('prev');
                 fusuma.add('1').to('start');
                 fusuma.add('5').to('end');
+                fusuma.add('6').to('end');
+                fusuma.add('0').to('start');
+                fusuma.remove('end'); // remove 7
+                fusuma.remove('start'); // remove 0
                 $('#next').click(function(e) { fusuma.go('next'); });
                 $('#prev').click(function(e) { fusuma.go('prev'); });
             });
