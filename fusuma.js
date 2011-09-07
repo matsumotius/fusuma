@@ -27,11 +27,12 @@
         this.__defineGetter__('last', function(){ return this.contents.length - 1; });
         this.__defineGetter__('is_start', function(){ return this.current === 0; });
         this.__defineGetter__('is_end', function(){ return this.current === this.last; });
+        this.is_invalid_index = function(index) { return (index > this.last || index < 0); };
         this.apply_contents();
     };
     Fusuma.prototype.apply_contents = function() {
-        // todo: fix not to refresh all.
         this.contents = $(this.target).find('ul li');
+        $(this.target).scrollLeft(this.current * this.width); 
         $(this.target).find('ul li').css('width', px(this.width));
         $(this.target).find('ul li').css('list-style', 'none');
         $(this.target).find('ul li').css('float', 'left');
@@ -47,19 +48,26 @@
                 $(that.contents[POINT[dir]])[INSERT_TO[dir]](Tag.generate('li', {}, content));
                 if(dir === 'start' || dir === 'prev') {
                      that.current++;
-                     $(that.target).scrollLeft(that.current * that.width); //todo:move
                 }
                 that.apply_contents();
             }
         };
     };
+    Fusuma.prototype.remove = function(index) {
+        var dir = { next : this.current + 1, prev : this.current - 1, start : 0, end : this.last };
+        var remove_index = index in dir ? dir[index] : index;
+        if(this.is_invalid_index(remove_index)) return;
+        if(remove_index <= this.current) this.current--;
+        $($(this.target).find('ul li')[remove_index]).remove(); // todo: fix this dirty code.
+        this.apply_contents();
+    };
     Fusuma.prototype.go = function(dir, callback) {
         var dispatch_mapping = {
-            next : 'slide_into_left', forward : 'slide_into_left', prev : 'slide_into_right', back : 'slide_into_right'
+            next : 'slide_into_right', forward : 'slide_into_right', prev : 'slide_into_left', back : 'slide_into_left'
         };
         this[dispatch_mapping[dir]](callback);
     };
-    Fusuma.prototype.slide_into_left = function(callback) {
+    Fusuma.prototype.slide_into_right = function(callback) {
         if(this.is_end) return;
         var _this = this;
         $(this.target).filter(':not(:animated)').animate({
@@ -72,7 +80,7 @@
             }
         });
     };
-    Fusuma.prototype.slide_into_right = function(callback) {
+    Fusuma.prototype.slide_into_left = function(callback) {
         if(this.is_start) return;
         var _this = this;
         $(this.target).filter(':not(:animated)').animate({
