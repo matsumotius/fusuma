@@ -11,7 +11,7 @@
                 tag_string += this.BLANK + key + '=' + this.double_quotes(attr[key]);
             }
             tag_string += '>';
-            tag_string += ((val) ? val : '');
+            tag_string += $("<div />").append(val).html();
             tag_string += '</' + name + '>';
             return tag_string;
         }
